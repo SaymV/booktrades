@@ -1,0 +1,120 @@
+    <head>
+        <title>BookTrades | A better service for textbook exchange</title>
+        <meta charset="UTF-8"><!-- Bootstrap -->
+    </head>
+
+    <body>
+        {{> page}}
+    </body>
+
+    <template name="page">
+        <div id="content">
+            {{#if showCreateDialog}}
+                {{> createDialog}}
+            {{/if}}
+            {{> navbar}}
+                  {{> bookboard}}
+        </div>
+    </template>
+
+    <template name="bookboard">
+        <div class="container-fluid">
+            {{#each books}}
+            <div class="row-fluid">
+                <div class="span6">
+                  {{> book}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </template>
+
+    <template name="book">
+      <div class="book">
+        <p class="title">Title: {{title}}</p>
+        <p class="author">Author: {{author}}</p>
+        <p class="professor">Professor: {{professor}}</p>
+        <p class="studentclass">Class: {{studentclass}}</p>
+        <p class="ISBN">ISBN: {{isbn}}</p>
+        <p class="date">Posted on: {{date}}</p>
+        {{#if canRemove}}
+          <div class="alert alert-info"><small>
+              <b><a href="#" class="remove">delete this listing</a></b>.
+          </small></div>
+        {{/if}}
+      </div>
+    </template>
+
+    <template name="postButton">
+        <button class="btn btn-primary">Post a Book!</button>
+    </template>
+
+    <template name="createDialog">
+      <div class="mask"> </div>
+      <div class="modal">
+        <div class="modal-header">Post a Book!
+
+          <button type="button" class="close cancel">&times;</button>
+          <h3>Add Book</h3>
+        </div>
+
+        <div class="modal-body">
+          {{#if error}}
+            <div class="alert alert-error">{{error}}</div>
+          {{/if}}
+
+          <label>Title</label>
+          <input type="text" class="title span5">
+
+          <label>ISBN</label>
+          <input type="text" class="isbn span5">
+
+          <label>Author</label>
+          <input type="text" class="author span5">
+
+          <label>Class</label>
+          <input type="text" class="class span5">
+
+          <label>Professor</label>
+          <input type="text" class="professor span5">
+
+          <label>Description</label>
+          <textarea class="description span5"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <a href="#" class="btn cancel">Cancel</a>
+          <a href="#" class="btn btn-primary save">Add Book!</a>
+        </div>
+      </div>
+    </template>
+
+    <template name="navbar">
+            <div class="navbar navbar-fixed-top">
+              <div class="navbar-inner">
+                <div class="container">
+                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </a>
+                  <a class="brand" href="#">BookTrad.es</a>
+                  <div class="nav-collapse">
+                    <ul class="nav">
+                      <li><a href={{subdomain}}.booktrad.es><i class="icon-home icon-white"></i> Home</a></li>
+                      <li><a href="#">Change Schools</a></li>
+                      <li><a href="#">About</a></li>
+                      <li><a href="#">{{loginButtons}}</a></li>
+                      
+                    </ul>
+                    <form class="navbar-search" action="">
+                      <input type="text" class="search-query span2" placeholder="Search">
+                    </form>
+                    {{#if showPostButton}}
+                        {{> postButton}}
+                    {{/if}}
+                  </div><!-- /.nav-collapse -->
+                </div><!-- /.container -->
+              </div><!-- /.navbar-inner -->
+            </div><!-- /.navbar -->
+    </template>
