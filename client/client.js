@@ -1,8 +1,12 @@
-if (Session.get("subdomain") === undefined || Session.get("subdomain") !== window.location.host.split('.')[0]) {
-    if (window.location.host.split('.').length === 2) { //change this to 3 in production (foo.booktrad.es has three pieces)
-        Session.set("subdomain", window.location.host.split('.')[0]);
+var storeSchoolSubdomain = function () {
+    if (Session.get("subdomain") === undefined || Session.get("subdomain") !== window.location.host.split('.')[0]) {
+        if (window.location.host.split('.').length === 2) { //change this to 3 in production (foo.booktrad.es has three pieces)
+            Session.set("subdomain", window.location.host.split('.')[0]);
+        }
     }
-}
+};
+
+storeSchoolSubdomain();
 
 Meteor.autorun(function () {
     Meteor.subscribe("books", Session.get("subdomain"));
@@ -10,18 +14,19 @@ Meteor.autorun(function () {
 
 Template.bookboard.books = function () {
     var books;
-    if(Session.get("searchActivated")) { //this session variable is undefined as of the last commit.
+    if(Session.get("searchQuery") !== undefined) { //this session variable is undefined as of the last commit.
         var searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val(),
-            searchRegex = new RegExp("\\*" + searchQuery + "\\*", "i");
+            searchRegex = new RegExp("\\\\*" + searchQuery + "\\\\*", "i");
+        console.log(searchQuery);
+        console.log(searchRegex);
         books = Books.find({
-                    $or: [ { "title": { $regex: searchRegex }}, { "author": { $regex: searchRegex }}, { "class": { $regex: searchRegex }},{ "professor": { $regex: searchRegex }}  ]
+                    $or: [ { "title": { $regex: searchRegex }}, { "author": { $regex: searchRegex }}, { "studentclass": { $regex: searchRegex }},{ "professor": { $regex: searchRegex }}  ]
                 }, {
                     sort: {
                         date: -1,
                         name: 1
                 }
             });
-        console.log(books);
     } else {
         books = Books.find({}, {
                 sort: {
@@ -30,6 +35,7 @@ Template.bookboard.books = function () {
             }
         });
     }
+    console.log(books);
     return books;
 };
 
@@ -46,6 +52,19 @@ Template.book.events({
 
 Template.navbar.showPostButton = function () {
     return Session.get("subdomain") !== undefined;
+};
+
+Template.navbar.rendered = function () {
+    $('.search-query').keyup(function () {
+        console.log(Session.get("searchActivated"));
+        if ($(this).val().length > 0) {
+            Session.set("searchActivated", true);
+            Session.set("searchQuery", $(this).val());
+        } else {
+            Session.set("searchActivated", false);
+            Session.set("searchQuery", undefined);
+        }
+    });
 };
 
 Template.navbar.subdomain = function () {
