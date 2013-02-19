@@ -14,11 +14,9 @@ Meteor.autorun(function () {
 
 Template.bookboard.books = function () {
     var books;
-    if(Session.get("searchQuery") !== undefined) { //this session variable is undefined as of the last commit.
+    if(Session.get("searchQuery") !== undefined) {
         var searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val(),
             searchRegex = new RegExp("\\\\*" + searchQuery + "\\\\*", "i");
-        console.log(searchQuery);
-        console.log(searchRegex);
         books = Books.find({
                     $or: [ { "title": { $regex: searchRegex }}, { "author": { $regex: searchRegex }}, { "studentclass": { $regex: searchRegex }},{ "professor": { $regex: searchRegex }}  ]
                 }, {
