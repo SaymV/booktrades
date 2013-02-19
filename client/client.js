@@ -4,16 +4,32 @@ if (Session.get("subdomain") === undefined || Session.get("subdomain") !== windo
     }
 }
 
+Meteor.autorun(function () {
+    Meteor.subscribe("books", Session.get("subdomain"));
+});
+
 Template.bookboard.books = function () {
-    var books = Books.find({
-        "school": Session.get("subdomain")
-    }, {
-        sort: {
-            date: -1,
-            name: 1
-        }
-    });
-    console.log(books);
+    var books;
+    if(Session.get("searchActivated")) { //this session variable is undefined as of the last commit.
+        var searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val(),
+            searchRegex = new RegExp("\\*" + searchQuery + "\\*", "i");
+        books = Books.find({
+                    $or: [ { "title": { $regex: searchRegex }}, { "author": { $regex: searchRegex }}, { "class": { $regex: searchRegex }},{ "professor": { $regex: searchRegex }}  ]
+                }, {
+                    sort: {
+                        date: -1,
+                        name: 1
+                }
+            });
+        console.log(books);
+    } else {
+        books = Books.find({}, {
+                sort: {
+                    date: -1,
+                    name: 1
+            }
+        });
+    }
     return books;
 };
 

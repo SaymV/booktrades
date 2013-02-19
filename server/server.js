@@ -63,3 +63,7 @@ Meteor.methods({
         });
     }
 });
+
+Meteor.publish("books", function (subdomain) {
+  return Books.find({"school" : subdomain}, {sort: {date: -1, name: 1}})
+});
