@@ -12,6 +12,11 @@ Meteor.autorun(function () {
     Meteor.subscribe("books", Session.get("subdomain"));
 });
 
+Handlebars.registerHelper("displayDate", function(date) {
+    var dateObject = new Date(date);
+    return dateObject.toLocaleDateString() + " at " + dateObject.toLocaleTimeString();
+});
+
 Template.bookboard.books = function () {
     var books;
     if(Session.get("searchQuery") !== undefined) {

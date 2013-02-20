@@ -31,12 +31,12 @@
 
     <template name="book">
       <div class="book">
-        <p class="title">Title: {{title}}</p>
+        <p class="title">Title: <b>{{title}}</b></p>
         <p class="author">Author: {{author}}</p>
         <p class="professor">Professor: {{professor}}</p>
         <p class="studentclass">Class: {{studentclass}}</p>
         <p class="ISBN">ISBN: {{isbn}}</p>
-        <p class="date">Posted on: {{date}}</p>
+        <p class="date">Posted on: {{displayDate date}}</p>
         {{#if canRemove}}
           <div class="alert alert-info"><small>
               <b><a href="#" class="remove">delete this listing</a></b>.
