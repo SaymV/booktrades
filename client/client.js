@@ -1,10 +1,13 @@
 var storeSchoolSubdomain = function () {
-    if (Session.get("subdomain") === undefined || Session.get("subdomain") !== window.location.host.split('.')[0]) {
-        if (window.location.host.split('.').length === 2) { //change this to 3 in production (foo.booktrad.es has three pieces)
-            Session.set("subdomain", window.location.host.split('.')[0]);
+        if (Session.get("subdomain") === undefined || Session.get("subdomain") !== window.location.host.split('.')[0]) {
+            if (window.location.host.split('.').length === 2) { //change this to 3 in production (foo.booktrad.es has three pieces)
+                Session.set("subdomain", window.location.host.split('.')[0]);
+            }
         }
-    }
-};
+    },
+    userIsLoggedIn = function () {
+        return Meteor.user() !== null;
+    };
 
 storeSchoolSubdomain();
 
@@ -38,8 +41,15 @@ Template.bookboard.books = function () {
             }
         });
     }
-    console.log(books);
     return books;
+};
+
+Template.page.showContactOwnerDialog = function () { 
+    return Session.get("showContactOwnerDialog");
+};
+
+var toggleContactOwnerDialog = function (value) {
+    Session.set("showContactOwnerDialog", value)
 };
 
 Template.book.canRemove = function () {
@@ -50,7 +60,19 @@ Template.book.events({
     'click .remove': function () {
         Books.remove(this._id, this);
         return false;
+    },
+
+    'click .contact': function () {
+      //var msg = document.getElementById("message").value;
+      if (!userIsLoggedIn()) { 
+           alert("You must make an account to contact this book owner!");
+          return; 
+      }//must be logged in to contact
+      console.log(this);
+      toggleContactOwnerDialog(true);
+      Meteor.call('sendMessage', this.owner, "THIS IS A MESSAGE!");
     }
+
 });
 
 Template.navbar.showPostButton = function () {
@@ -59,12 +81,9 @@ Template.navbar.showPostButton = function () {
 
 Template.navbar.rendered = function () {
     $('.search-query').keyup(function () {
-        console.log(Session.get("searchActivated"));
         if ($(this).val().length > 0) {
-            Session.set("searchActivated", true);
             Session.set("searchQuery", $(this).val());
         } else {
-            Session.set("searchActivated", false);
             Session.set("searchQuery", undefined);
         }
     });
@@ -77,10 +96,10 @@ Template.navbar.subdomain = function () {
 ///////////////////////////////////////////////////////////////////////////////
 // Create Book dialog
 
-var openCreateDialog = function () {
-    Session.set("showCreateDialog", true);
-    console.log("I've been here before a few times.");
+var toggleCreateDialog = function (value) {
+    Session.set("showCreateDialog", value);
 };
+
 
 Template.page.showCreateDialog = function () {
     return Session.get("showCreateDialog");
@@ -111,7 +130,7 @@ Template.createDialog.events({
                     Session.set("selected", book);
                 }
             });
-            Session.set("showCreateDialog", false);
+             toggleCreateDialog(false);
         } else {
             Session.set("createError",
                 "It needs a title and a description, or why bother?");
@@ -119,7 +138,7 @@ Template.createDialog.events({
     },
 
     'click .cancel': function () {
-        Session.set("showCreateDialog", false);
+        toggleCreateDialog(false);
     }
 });
 
@@ -129,11 +148,11 @@ Template.createDialog.error = function () {
 
 Template.postButton.events({
     'click button': function (event, template) {
-        if (!Meteor.userId()) { // must be logged in to create events
+        if (!userIsLoggedIn()) { // must be logged in to create events
             alert("You must make an account to post your Books!");
             return;
         }
-        openCreateDialog();
+        toggleCreateDialog(true);
     }
 });
 

@@ -10,3 +10,5 @@ bootstrap
 accounts-password
 accounts-google
 accounts-ui
+email
+spiderable
