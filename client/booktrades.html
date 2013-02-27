@@ -122,7 +122,11 @@
                   <a class="brand" href="#">BookTrad.es</a>
                   <div class="nav-collapse">
                     <ul class="nav">
-                      <li><a href={{subdomain}}.booktrad.es><i class="icon-home icon-white"></i> Home</a></li>
+                      <li><a href="{{subdomain}}.booktrad.es"><i class="icon-home icon-white"></i>
+                        {{#if showPostButton}}
+                            {{schoolName}} 
+                        {{/if}}
+                       </a></li>
                       <li><a href="#">Change Schools</a></li>
                       <li><a href="#">About</a></li>
                       <li><a href="#">{{loginButtons}}</a></li>

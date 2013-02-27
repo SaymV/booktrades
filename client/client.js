@@ -1,31 +1,34 @@
+Meteor.autorun(function () {
+    Meteor.subscribe("books", Session.get("subdomain"));
+    Meteor.subscribe("subdomains");
+});
+
 var storeSchoolSubdomain = function () {
-        if (Session.get("subdomain") === undefined || Session.get("subdomain") !== window.location.host.split('.')[0]) {
-            if (window.location.host.split('.').length === 2) { //change this to 3 in production (foo.booktrad.es has three pieces)
+        var unverifiedSubdomain = window.location.host.split('.')[0];
+        if ((Session.get("subdomain") === undefined || Session.get("subdomain") !== unverifiedSubdomain)
+            && window.location.host.split('.').length === 2) { //change this to 3 in production (foo.booktrad.es has three pieces)
                 Session.set("subdomain", window.location.host.split('.')[0]);
             }
-        }
+        
     },
     userIsLoggedIn = function () {
         return Meteor.user() !== null;
     },
 
-    verifySubdomain = function () {
-
+    verifySubdomain = function (unverifiedSubdomain) {
+        return Subdomains.find({subdomain: unverifiedSubdomain}).fetch().length > 0;
     };
 
 storeSchoolSubdomain();
-
-Meteor.autorun(function () {
-    Meteor.subscribe("books", Session.get("subdomain"));
-});
-
 Handlebars.registerHelper("displayDate", function(date) {
     var dateObject = new Date(date);
     return dateObject.toLocaleDateString() + " at " + dateObject.toLocaleTimeString();
 });
 
+
 Template.bookboard.books = function () {
     var books;
+
     if(Session.get("searchQuery") !== undefined) {
         var searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val(),
             searchRegex = new RegExp("\\\\*" + searchQuery + "\\\\*", "i");
@@ -99,7 +102,8 @@ Template.book.events({
 });
 
 Template.navbar.showPostButton = function () {
-    return Session.get("subdomain") !== undefined;
+    return Session.get("subdomain") !== undefined   
+            && verifySubdomain(Session.get("subdomain"));
 };
 
 Template.navbar.rendered = function () {
@@ -114,6 +118,11 @@ Template.navbar.rendered = function () {
 
 Template.navbar.subdomain = function () {
     return Session.get("subdomain");
+};
+
+Template.navbar.schoolName = function () {
+    console.log(Subdomains.find({subdomain: Session.get("subdomain") }).fetch());
+    return Subdomains.find({subdomain: Session.get("subdomain") }).fetch()[0].schoolName;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
