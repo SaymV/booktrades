@@ -7,6 +7,10 @@ var storeSchoolSubdomain = function () {
     },
     userIsLoggedIn = function () {
         return Meteor.user() !== null;
+    },
+
+    verifySubdomain = function () {
+
     };
 
 storeSchoolSubdomain();
@@ -77,7 +81,6 @@ Template.book.events({
         Books.remove(this._id, this);
         return false;
     },
-
     'click .contact': function () {
       if (!userIsLoggedIn()) { 
            alert("You must make an account to contact this book owner!");
@@ -85,6 +88,12 @@ Template.book.events({
       }
       toggleContactOwnerDialog(true);
       Session.set("bookToContact", this);
+    },
+    'mouseenter .book': function () {
+        $("." + this._id).toggleClass("active-book");
+    },
+    'mouseleave .book': function () {
+         $("." + this._id).toggleClass("active-book");
     }
 
 });

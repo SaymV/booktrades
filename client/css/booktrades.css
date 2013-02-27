@@ -6,27 +6,27 @@ body{
 .book {
     border-bottom: 0;
     margin-bottom: 0;
-    -khtml-border-radius: 1em 1em 0 0;
-    -moz-border-radius: 1em 1em 0 0;
-    -ms-border-radius: 1em 1em 0 0;
-    -o-border-radius: 1em 1em 0 0;
-    -webkit-border-radius: 1em 1em 0 0;
-    border-radius: 1em 1em 0 0;
+    -khtml-border-radius: 1em 1em 1em 1em;
+    -moz-border-radius: 1em 1em 1em 1em;
+    -ms-border-radius: 1em 1em 1em 1em;
+    -o-border-radius: 1em 1em 1em 1em;
+    -webkit-border-radius: 1em 1em 1em 1em;
+    border-radius: 1em 1em 1em 1em;
     background: #fff;
     border: 1px solid #ccc;
     margin: 2em;
     overflow: hidden;
     color: black;
+    padding: 10px;
 }
 
-.book .alert { 
-    float: right;
-    
-}
-
-.book p {
-  margin-left: 5px;
+.book p, .nav-collapse button {
+  margin-left: 20px;
   margin-right: 5px;
+}
+
+.active-book {
+  background-color: transparent;
 }
 
 .span {

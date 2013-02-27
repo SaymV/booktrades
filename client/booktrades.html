@@ -33,7 +33,7 @@
     </template>
 
     <template name="book">
-      <div class="book">
+      <div class="book {{_id}}">
         <p class="title"><b>{{title}}</b></p>
         <p class="author"><i class="icon-user"></i> Author: {{author}}</p>
         <p class="professor"><i class="icon-user"></i> Professor: {{professor}}</p>
@@ -49,10 +49,6 @@
         {{/if}}
         </p>
       </div>
-    </template>
-
-    <template name="postButton">
-        <button class="btn btn-primary">Post a Book!</button>
     </template>
 
     <template name="contactOwnerDialog">
@@ -108,6 +104,10 @@
           <a href="#" class="btn btn-primary save">Add Book!</a>
         </div>
       </div>
+    </template>
+
+    <template name="postButton">
+        <button class="btn">Post a Book!</button>
     </template>
 
     <template name="navbar">

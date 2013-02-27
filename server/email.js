@@ -11,7 +11,7 @@ var sendMessage = function (fromId, toId, msg) {
       fromEmail = userEmail(from),
       toEmail = userEmail(to);
   Email.send({
-    from: fromEmail,
+    from: "no-reply@booktrad.es",
     to: toEmail,
     replyTo: fromEmail || undefined,
     subject: "BookTrades: "+ fromEmail +" sent you this email !",
@@ -24,7 +24,8 @@ var sendMessage = function (fromId, toId, msg) {
 
   Meteor.methods({
   'sendMessage': function (toId, msg) {
-    if (Meteor.isServer)
+    if (Meteor.isServer) {
       sendMessage(this.userId, toId, msg);
+    }
   }
 });
