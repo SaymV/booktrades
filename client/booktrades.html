@@ -12,6 +12,9 @@
             {{#if showCreateDialog}}
                 {{> createDialog}}
             {{/if}}
+            {{#if showContactOwnerDialog}}
+                {{> contactOwnerDialog}}
+            {{/if}}
             {{> navbar}}
                   {{> bookboard}}
         </div>
@@ -31,24 +34,40 @@
 
     <template name="book">
       <div class="book">
-        <p class="title">Title: <b>{{title}}</b></p>
-        <p class="author">Author: {{author}}</p>
-        <p class="professor">Professor: {{professor}}</p>
-        <p class="studentclass">Class: {{studentclass}}</p>
-        <p class="ISBN">ISBN: {{isbn}}</p>
-        <p class="date">Posted on: {{displayDate date}}</p>
+        <p class="title"><b>{{title}}</b></p>
+        <p class="author"><i class="icon-user"></i> Author: {{author}}</p>
+        <p class="professor"><i class="icon-user"></i> Professor: {{professor}}</p>
+        <p class="studentclass"><i class="icon-book"></i> Class: {{studentclass}}</p>
+        <p class="ISBN"><i class="icon-barcode"></i> ISBN: {{isbn}}</p>
+        <p class="date">Posted on: {{displayDate date}}
         {{#if canRemove}}
-          <div class="alert alert-info"><small>
-              <b><a href="#" class="remove">delete this listing</a></b>.
-          </small></div>
+          <button class="btn btn-small btn-inverse pull-right remove">
+              <i class="icon-remove icon-white"></i> Delete this listing
+          </button>
         {{else}}
-        <button class="btn btn-small contact pull-right">contact book owner</button>
+        <button class="btn btn-small btn-inverse contact pull-right"><i class="icon-envelope icon-white"></i> Contact Owner</button>
         {{/if}}
+        </p>
       </div>
     </template>
 
     <template name="postButton">
         <button class="btn btn-primary">Post a Book!</button>
+    </template>
+
+    <template name="contactOwnerDialog">
+      <div class="modal">
+        <div class="modal-header">Contact the owner of {{book.title}}</div>
+        <div class="modal-body">
+          Hey, I saw your book on BookTrades and I want to buy it! </br>
+          Here's my contact info:
+            <textarea class="message span5"></textarea>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn cancel">Cancel</a>
+          <a href="#" class="btn btn-primary send">Send Message!</a>
+        </div>
+      </div>
     </template>
 
     <template name="createDialog">

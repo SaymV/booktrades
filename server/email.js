@@ -1,5 +1,5 @@
 //This file contains all server email functionality. (contacting book owners, et. al.)
-var contactEmail = function (user) {
+var userEmail = function (user) {
   if (user.emails && user.emails.length) {
     return user.emails[0].address;
   }
@@ -8,8 +8,8 @@ var contactEmail = function (user) {
 var sendMessage = function (fromId, toId, msg) {
   var from = Meteor.users.findOne(fromId),
       to = Meteor.users.findOne(toId),
-      fromEmail = contactEmail(from),
-      toEmail = contactEmail(to);
+      fromEmail = userEmail(from),
+      toEmail = userEmail(to);
   Email.send({
     from: fromEmail,
     to: toEmail,

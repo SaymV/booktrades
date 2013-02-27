@@ -52,6 +52,22 @@ var toggleContactOwnerDialog = function (value) {
     Session.set("showContactOwnerDialog", value)
 };
 
+Template.contactOwnerDialog.book = function () {
+    return Session.get("bookToContact");
+};
+
+Template.contactOwnerDialog.events({
+    'click .send': function (event, template) {
+        var message = template.find(".message").value;
+        Meteor.call('sendMessage', Session.get("bookToContact").owner, message);
+        toggleContactOwnerDialog(false);
+    },
+
+    'click .cancel': function () {
+        toggleContactOwnerDialog(false);
+    }
+});
+
 Template.book.canRemove = function () {
     return this.owner === Meteor.userId();
 };
@@ -63,14 +79,12 @@ Template.book.events({
     },
 
     'click .contact': function () {
-      //var msg = document.getElementById("message").value;
       if (!userIsLoggedIn()) { 
            alert("You must make an account to contact this book owner!");
           return; 
-      }//must be logged in to contact
-      console.log(this);
+      }
       toggleContactOwnerDialog(true);
-      Meteor.call('sendMessage', this.owner, "THIS IS A MESSAGE!");
+      Session.set("bookToContact", this);
     }
 
 });

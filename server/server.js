@@ -3,13 +3,13 @@ Meteor.startup(function () {
     if (Books.find().count() === 0) {
       var books = [ { title: "Applied Combinatorics",
                    author: "Alan Tucker",
-                   professor: "Dr. Mostag",
+                   professor: "Dr. Mosteig",
                    studentclass: "Discrete Methods",
                    school: "lmu",
                    isbn: 9780470458389 },
                    { title: "NOT APPLIED Combinatorics",
                    author: "Alan Tucker",
-                   professor: "Dr. Mostag",
+                   professor: "Dr. Mosteig",
                    studentclass: "Discrete Methods",
                    school: "lmu",
                    isbn: 1234567980 }];
