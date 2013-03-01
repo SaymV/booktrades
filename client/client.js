@@ -51,13 +51,48 @@ Template.bookboard.books = function () {
     return books;
 };
 
+Template.schoolList.schoolNames = function () {
+    return Subdomains.find({}).fetch();
+};
+
 Template.page.showContactOwnerDialog = function () { 
     return Session.get("showContactOwnerDialog");
 };
 
-var toggleContactOwnerDialog = function (value) {
-    Session.set("showContactOwnerDialog", value)
+Template.page.showAboutModal = function() {
+    return Session.get("showAboutModal");
 };
+
+Template.page.showSchoolList = function () {
+    return Session.get("showSchoolList");
+};
+
+var toggleContactOwnerDialog = function (value) {
+        Session.set("showContactOwnerDialog", value)
+    },
+
+    toggleAboutModal = function () {
+        if (Session.get("showAboutModal") === true) {
+            Session.set("showAboutModal", false);
+        } else {
+            Session.set("showAboutModal", true);
+        }
+    },
+
+    toggleSchoolList = function () {
+        if (Session.get("showSchoolList") === true) {
+            Session.set("showSchoolList", false);
+        } else {
+            Session.set("showSchoolList", true);
+        }
+        
+    };
+
+Template.aboutModal.events({
+    'click .cancel': function () {
+        toggleAboutModal();
+    }
+});
 
 Template.contactOwnerDialog.book = function () {
     return Session.get("bookToContact");
@@ -106,12 +141,22 @@ Template.navbar.showPostButton = function () {
             && verifySubdomain(Session.get("subdomain"));
 };
 
+Template.schoolList.rendered = function () {
+    //MAKE THIS A FUNCTION THAT GOES TO THE LINK WHEN CLICKED
+};
+
 Template.navbar.rendered = function () {
     $('.search-query').keyup(function () {
         if ($(this).val().length > 0) {
             Session.set("searchQuery", $(this).val());
         } else {
             Session.set("searchQuery", undefined);
+        }
+    });
+    $('.search-query').keypress(function (e) {
+
+        if (e.which  === 13) {               
+            return false;
         }
     });
 };
@@ -121,7 +166,6 @@ Template.navbar.subdomain = function () {
 };
 
 Template.navbar.schoolName = function () {
-    console.log(Subdomains.find({subdomain: Session.get("subdomain") }).fetch());
     return Subdomains.find({subdomain: Session.get("subdomain") }).fetch()[0].schoolName;
 };
 
@@ -180,11 +224,32 @@ Template.createDialog.error = function () {
 
 Template.postButton.events({
     'click button': function (event, template) {
-        if (!userIsLoggedIn()) { // must be logged in to create events
+        if (!userIsLoggedIn()) { // must be logged in to post books
             alert("You must make an account to post your Books!");
             return;
         }
         toggleCreateDialog(true);
+    }
+});
+
+Template.navbar.events({
+    'click .change-schools': function () {
+        toggleSchoolList();
+    },
+    'click .about': function () {
+        toggleAboutModal();
+    }
+});
+
+Template.schoolList.events({
+    'click .cancel': function () {
+        toggleSchoolList();
+    },
+    'click .btn': function (event, template) {
+        console.log(template.find("input").value);
+        if ( template.find("input").value !== "") {
+            window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
+        }
     }
 });
 

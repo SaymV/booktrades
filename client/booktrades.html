@@ -15,8 +15,14 @@
             {{#if showContactOwnerDialog}}
                 {{> contactOwnerDialog}}
             {{/if}}
+            {{#if showAboutModal}}
+                {{> aboutModal}}
+            {{/if}}
+            {{#if showSchoolList}}
+                {{> schoolList}}
+            {{/if}}
             {{> navbar}}
-                  {{> bookboard}}
+            {{> bookboard}}
         </div>
     </template>
 
@@ -106,6 +112,36 @@
       </div>
     </template>
 
+    <template name="aboutModal">
+      <div id="about"class="modal">
+        <div class="modal-header"><h3>About BookTrades<h3></div>
+        <div class="modal-body">
+          BookTrades is a place for students to buy/sell/exchange books. Post your book here, tell your friends about it, and beat the over-priced bookstore!
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-primary cancel">Close</a>
+        </div>
+      </div>
+    </template>
+
+    <template name="schoolList">
+       <div class="modal">
+        <div class="modal-header"><h3>Change Schools</h3></div>
+        <div class="modal-body">
+          <p>Is this not your school? Are you searching for one nearby? Find a school near you and click Go!</p>
+            <input type=text list=subdomains>
+              <datalist id="subdomains">
+                {{#each schoolNames}}
+                 <option value="{{schoolName}}" label="{{subdomain}}.booktrad.es"></option>
+                {{/each}}
+              </datalist>
+              <button class="btn btn-inverse">Go!</button>
+       </div>
+       <div class="modal-footer">
+          <a href="#" class="btn btn-primary cancel">Close</a>
+       </div>
+    </template>
+
     <template name="postButton">
         <button class="btn">Post a Book!</button>
     </template>
@@ -122,13 +158,13 @@
                   <a class="brand" href="#">BookTrad.es</a>
                   <div class="nav-collapse">
                     <ul class="nav">
-                      <li><a href="{{subdomain}}.booktrad.es"><i class="icon-home icon-white"></i>
+                      <li><a href="/"><i class="icon-home icon-white"></i>
                         {{#if showPostButton}}
                             {{schoolName}} 
                         {{/if}}
                        </a></li>
-                      <li><a href="#">Change Schools</a></li>
-                      <li><a href="#">About</a></li>
+                      <li><a class="change-schools" href="#">Change Schools</a></li>
+                      <li><a class="about" href="#">About</a></li>
                       <li><a href="#">{{loginButtons}}</a></li>
                       
                     </ul>
@@ -138,6 +174,14 @@
                     {{#if showPostButton}}
                         {{> postButton}}
                     {{/if}}
+                    <ul class="nav pull-right">
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Feedback</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="mailto:info@booktrad.es">info@booktrad.es</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                   </div><!-- /.nav-collapse -->
                 </div><!-- /.container -->
               </div><!-- /.navbar-inner -->
