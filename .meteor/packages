@@ -5,7 +5,6 @@
 
 insecure
 preserve-inputs
-jquery
 bootstrap
 accounts-password
 accounts-google
