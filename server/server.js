@@ -65,7 +65,7 @@ Meteor.methods({
     createBook: function (options) {
         options = options || {};
         options.isbn.replace(/\D/g, '');
-        if (!(typeof options.title === "string" && options.title.length && typeof options.description === "string" && options.description.length && typeof options.author === "string" && options.author.length >= 0 && typeof options.isbn === "string" && (options.isbn.length === 10 || options.isbn === 13)) && typeof options.school === "string") throw new Meteor.Error(400, "Required parameter missing");
+        if (!(typeof options.title === "string" && options.title.length && typeof options.description === "string" && options.description.length && typeof options.author === "string" && options.author.length >= 0 && typeof options.isbn === "string" && (options.isbn.length === 10 || options.isbn.length === 13)) && typeof options.school === "string") throw new Meteor.Error(400, "Required parameter missing");
         if (options.title.length > 100) throw new Meteor.Error(413, "Title too long");
         if (options.description.length > 1000) throw new Meteor.Error(413, "Description too long");
         if (!this.userId) throw new Meteor.Error(403, "You must be logged in");
