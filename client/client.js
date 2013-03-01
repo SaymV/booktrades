@@ -101,7 +101,7 @@ Template.contactOwnerDialog.book = function () {
 Template.contactOwnerDialog.events({
     'click .send': function (event, template) {
         var message = template.find(".message").value;
-        Meteor.call('sendMessage', Session.get("bookToContact").owner, message);
+        Meteor.call('sendMessage', Session.get("bookToContact").owner, message, Template.contactOwnerDialog.book());
         toggleContactOwnerDialog(false);
     },
 
@@ -246,7 +246,6 @@ Template.schoolList.events({
         toggleSchoolList();
     },
     'click .btn': function (event, template) {
-        console.log(template.find("input").value);
         if ( template.find("input").value !== "") {
             window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
         }
