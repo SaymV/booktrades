@@ -81,6 +81,11 @@ body{
   color: #f4f4f4;
 }
 
+.navbar .nav li.dropdown.open > .dropdown-toggle {
+  color: #fff;
+  background-color: black;
+}
+
 .title {
     font-size: 20px;
 }
