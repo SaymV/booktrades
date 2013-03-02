@@ -72,6 +72,7 @@ body{
   padding: 10px 10px 11px;
   font-size: 14px;
   color: #efefef;
+  text-shadow: none;
 }
 
 .navbar .brand {
@@ -95,7 +96,6 @@ body{
     padding: 10px 15px 10px;
     color: #ffffff;
     text-decoration: none;
-    text-shadow: 0 1px 0 #ffffff;
 }
 
 .accounts-dialog {
