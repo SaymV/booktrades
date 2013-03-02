@@ -26,7 +26,10 @@ body{
 }
 
 .active-book {
-  background-color: transparent;
+  /* Fallback for web browsers that don't support RGBa */
+  background-color: rgb(255, 255, 202);
+  /* RGBa with 0.6 opacity */
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .span {
@@ -44,14 +47,25 @@ body{
 }
 
 .navbar-inner {
-  background: black;
-  color: white;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+  background-color: #363636;
+  background-image: -moz-linear-gradient(top,#444,#222);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#444),to(#222));
+  background-image: -webkit-linear-gradient(top,#444,#222);
+  background-image: -o-linear-gradient(top,#444,#222);
+  background-image: linear-gradient(to bottom,#444,#222);
+  background-repeat: repeat-x;
+  border-color: #222 #222 #000;
+  border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(0,0,0,.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gra
 }
 
-.navbar .nav > .active > a,
-.navbar .nav > .active > a:hover,
-.navbar .nav > .active > a:focus {
-  color: #424242;
+.navbar .nav > li > a:focus, .navbar .nav > li > a:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: black;
 }
 
 .navbar .nav > li > a {

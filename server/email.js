@@ -22,7 +22,7 @@ var sendMessage = function (fromId, toId, msg, book) {
           "Here's my contact info: " + msg +
           "\n\n" + 
           "The BookTrades Team.\n"+
-          Meteor.absoluteUrl()+"\n"
+          "http://BookTrad.es\n"
   });
 }
 
