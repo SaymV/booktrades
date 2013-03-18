@@ -33,7 +33,7 @@ Template.bookboard.books = function () {
         var searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val(),
             searchRegex = new RegExp("\\\\*" + searchQuery + "\\\\*", "i");
         books = Books.find({
-                    $or: [ { "title": { $regex: searchRegex }}, { "author": { $regex: searchRegex }}, { "studentclass": { $regex: searchRegex }},{ "professor": { $regex: searchRegex }}  ]
+                    $or: [ { "title": { $regex: searchRegex }}, { "author": { $regex: searchRegex }}, { "studentclass": { $regex: searchRegex }},{ "professor": { $regex: searchRegex }},{ "isbn": { $regex: searchRegex}}  ]
                 }, {
                     sort: {
                         date: -1,
