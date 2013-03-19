@@ -14,12 +14,10 @@ var sendMessage = function (fromId, toId, msg, book) {
     from: "hit-reply@booktrad.es",
     to: toEmail,
     replyTo: fromEmail || undefined,
-    subject: "BookTrades: "+ fromEmail +" wants to buy your book!",
-    text: "Hello "+ toEmail +"!\n\n" + 
-          "You posted your book, " + book.title + ", on BookTrades.\n\n " + 
-          "You can either reply to this email or use the contact info they provided. \n\n" +
-          "They said: \n\n Hey, I saw your book on BookTrades and I want to buy it! \n\n " +
-          "Here's my contact info: " + msg +
+    subject: "BookTrades: "+ fromEmail +" wants your book!",
+    text: "You posted your book, " + book.title + ", on BookTrades.\n\n " + 
+          "Hit reply to message back. \n\n" +
+          "They said:" + msg +
           "\n\n" + 
           "The BookTrades Team.\n"+
           "http://BookTrad.es\n"
