@@ -1,113 +1,106 @@
-/* CSS declarations go here */
-body{
-    background: url('/img/grid.png'); 
-}
-
-.book {
-    border-bottom: 0;
-    margin-bottom: 0;
-    -khtml-border-radius: 1em 1em 1em 1em;
-    -moz-border-radius: 1em 1em 1em 1em;
-    -ms-border-radius: 1em 1em 1em 1em;
-    -o-border-radius: 1em 1em 1em 1em;
-    -webkit-border-radius: 1em 1em 1em 1em;
-    border-radius: 1em 1em 1em 1em;
-    background: #fff;
-    border: 1px solid #ccc;
-    margin: 2em;
-    overflow: hidden;
-    color: black;
-    padding: 10px;
-}
-
-.book p, .nav-collapse button {
-  margin-left: 20px;
-  margin-right: 5px;
-}
-
-.active-book {
-  /* Fallback for web browsers that don't support RGBa */
-  background-color: rgb(255, 255, 202);
-  /* RGBa with 0.6 opacity */
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
-.span {
-    padding: 19px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #e3e3e3;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
-    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
-}
-
-.navbar-inner {
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0,0,0,.25);
-  background-color: #363636;
-  background-image: -moz-linear-gradient(top,#444,#222);
-  background-image: -webkit-gradient(linear,0 0,0 100%,from(#444),to(#222));
-  background-image: -webkit-linear-gradient(top,#444,#222);
-  background-image: -o-linear-gradient(top,#444,#222);
-  background-image: linear-gradient(to bottom,#444,#222);
-  background-repeat: repeat-x;
-  border-color: #222 #222 #000;
-  border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(0,0,0,.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gra
-}
-
-.navbar .nav > li > a:focus, .navbar .nav > li > a:hover {
-  color: #fff;
-  text-decoration: none;
-  background-color: black;
-}
-
-.navbar .nav > li > a {
-  padding: 10px 10px 11px;
-  font-size: 14px;
-  color: #efefef;
-  text-shadow: none;
-}
-
-.navbar .brand {
-  padding: 8px 20px 12px;
-  font-size: 20px;
-  color: #f4f4f4;
-}
-
-.navbar .nav li.dropdown.open > .dropdown-toggle {
-  color: #fff;
-  background-color: black;
-}
-
-.title {
-    font-size: 20px;
-}
-
 #content {
-    padding-top: 50px;
-
+  padding-top:50px;
 }
-
 #login-buttons a {
-    float: none;
-    margin-top: 10px;
-    padding: 10px 15px 10px;
-    color: #ffffff;
-    text-decoration: none;
+  color:#ffffff;
+  float:none;
+  margin-top:10px;
+  padding:10px 15px 10px;
+  text-decoration:none;
 }
-
-.accounts-dialog {
-    background: #ccc;
-    opacity: 0.8;
+#login-dropdown-list a {
+  color:black;
 }
-
-#login-dropdown-list a{
-    color: black;
+.active-book {
+  background-color:rgb(255, 255, 202);
+  background-color:rgba(255, 255, 255, 0.6);
+}
+.book {
+  background:#fff;
+  border:1px solid #ccc;
+  border-bottom:0;
+  border-radius:1em 1em 1em 1em;
+  color:black;
+  khtml-border-radius:1em 1em 1em 1em;
+  margin:2em;
+  margin-bottom:0;
+  moz-border-radius:1em 1em 1em 1em;
+  ms-border-radius:1em 1em 1em 1em;
+  o-border-radius:1em 1em 1em 1em;
+  overflow:hidden;
+  padding:10px;
+  webkit-border-radius:1em 1em 1em 1em;
+}
+.book p, .nav-collapse button {
+  margin-left:20px;
+  margin-right:5px;
+}
+.navbar .brand {
+  color:#f4f4f4;
+  font-size:20px;
+  padding:8px 20px 12px;
+}
+.navbar .nav > li > a {
+  color:#efefef;
+  font-size:14px;
+  padding:10px 10px 11px;
+  text-shadow:none;
+}
+.navbar .nav > li > a:focus, .navbar .nav > li > a:hover {
+  background-color:black;
+  color:#fff;
+  text-decoration:none;
+}
+.navbar .nav li.dropdown.open > .dropdown-toggle {
+  background-color:black;
+  color:#fff;
+}
+.navbar-inner {
+  background-color:#363636;
+  background-image:linear-gradient(to bottom,#444,#222);
+  background-image:-moz-linear-gradient(top,#444,#222);
+  background-image:-o-linear-gradient(top,#444,#222);
+  background-image:-webkit-gradient(linear,0 0,0 100%,from(#444),to(#222));
+  background-image:-webkit-linear-gradient(top,#444,#222);
+  background-repeat:repeat-x;
+  border-color:#222 #222 #000;
+  border-color:rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(0,0,0,.25);
+  color:#fff;
+  filter:progid:DXImageTransform.Microsoft.gra;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff444444', endColorstr='#ff222222', GradientType=0);
+  text-shadow:0 -1px 0 rgba(0,0,0,.25);
+}
+.post-book-button {
+  padding-top:5px;
+}
+.search-query {
+  background-color:#fff;
+  font-size:24px;
+  font-weight:200;
+  min-height:40px;
+  padding:10px 10px 10px 15px;
+  width:90%;
+}
+.span {
+  background-color:#f5f5f5;
+  border:1px solid #e3e3e3;
+  border-radius:4px;
+  box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+  margin-bottom:20px;
+  margin-left:20px;
+  moz-border-radius:4px;
+  moz-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+  padding:19px;
+  webkit-border-radius:4px;
+  webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.05);
+}
+.title {
+  font-size:20px;
+}
+.ui-autocomplete {
+  z-index:1050;
+}
+body {
+  background:url('/img/grid.png');
+  font-family:'Roboto Condensed', sans-serif;
 }
