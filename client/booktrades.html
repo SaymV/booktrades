@@ -1,6 +1,7 @@
     <head>
         <title>BookTrades | A better service for textbook exchange</title>
         <meta charset="UTF-8"><!-- Bootstrap -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
@@ -21,13 +22,40 @@
             {{#if showSchoolList}}
                 {{> schoolList}}
             {{/if}}
+            {{#if showAlertDiv}}
+              {{> alertDiv}}
+            {{/if}}
             {{> navbar}}
-            {{> bookboard}}
+            <div class="container-fluid">
+              {{#if contentLoaded}}
+                {{#if showBookBoard}}
+                  {{> sideBar}}
+                  {{> bookboard}}
+                {{else}}
+                  {{> defaultSchoolSelection}}
+                {{/if}}
+              {{else}}
+                <div class="loading"><h4>Loading Content...</h4></div>
+              {{/if}}       
+            </div>
         </div>
     </template>
 
+    <template name="sideBar">
+            <div class="span6 pull-right">
+                {{> postButton}}
+                <h2>Search</h2>
+                <input type="text" class="search-query" placeholder="Search by Title,Author,Professor,Class, or ISBN" autofocus>               
+            </div>
+    </template>
+
+    <template name="postButton">
+      <div class="post-book-button">
+        <button class="btn btn-large btn-inverse">Post a New Book!</button>
+      </div>
+    </template>
+
     <template name="bookboard">
-        <div class="container-fluid">
             {{#each books}}
             <div class="row-fluid">
                 <div class="span6">
@@ -35,7 +63,6 @@
                 </div>
             </div>
             {{/each}}
-        </div>
     </template>
 
     <template name="book">
@@ -47,7 +74,7 @@
         <p class="ISBN"><i class="icon-barcode"></i> ISBN: {{isbn}}</p>
         <p class="date">Posted on: {{displayDate date}}
         {{#if canRemove}}
-          <button class="btn btn-small btn-inverse pull-right remove">
+          <button class="btn btn-small btn-danger pull-right remove">
               <i class="icon-remove icon-white"></i> Delete this listing
           </button>
         {{else}}
@@ -61,8 +88,7 @@
       <div class="modal">
         <div class="modal-header">Contact the owner of {{book.title}}</div>
         <div class="modal-body">
-          Hey, I saw your book on BookTrades and I want to buy it! </br>
-          Here's my contact info:
+           Send the owner a message:
             <textarea class="message span5"></textarea>
         </div>
         <div class="modal-footer">
@@ -129,21 +155,27 @@
         <div class="modal-header"><h3>Change Schools</h3></div>
         <div class="modal-body">
           <p>Is this not your school? Are you searching for one nearby? Find a school near you and click Go!</p>
-            <input type=text list=subdomains>
-              <datalist id="subdomains">
-                {{#each schoolNames}}
-                 <option value="{{schoolName}}" label="{{subdomain}}.booktrad.es"></option>
-                {{/each}}
-              </datalist>
-              <button class="btn btn-inverse">Go!</button>
+          <div class="input-append">
+            <input type=text class="school-search" autofocus/>
+            <button class="btn btn-inverse">Go!</button>
+          </div>
        </div>
        <div class="modal-footer">
           <a href="#" class="btn btn-primary cancel">Close</a>
        </div>
     </template>
 
-    <template name="postButton">
-        <button class="btn">Post a Book!</button>
+    <template name="defaultSchoolSelection">
+        <div class="row-fluid">
+          <div class="book span4 offset4">
+            <h2>Welcome to BookTrades!</h2>
+            <h4>Search for your University's book board below and post your book!</h4>
+            <div class="input-append">
+              <input type=text id="school-search" class="school-search" autofocus/>
+              <button class="btn btn-inverse">Go!</button>
+            </div>
+          </div>
+        </div>
     </template>
 
     <template name="navbar">
@@ -172,17 +204,19 @@
                           </ul>
                      </li>
                     </ul>
-                    <form class="navbar-search" action="">
-                      <input type="text" class="search-query span2" placeholder="Search">
-                    </form>
-                    {{#if showPostButton}}
-                        {{> postButton}}
-                    {{/if}}
-                    <ul class="nav pull-right">
+                    <ul class="nav">
                       <li><a href="#">{{loginButtons}}</a></li>
                     </ul>
                   </div><!-- /.nav-collapse -->
                 </div><!-- /.container -->
               </div><!-- /.navbar-inner -->
             </div><!-- /.navbar -->
+    </template>
+
+    <template name="alertDiv">
+            <div id="alert-div" class=" modal alert alert-info fade in" data-alert="alert"> 
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <h4 class="modal-header">Success!</h4>
+              <p class="modal-body">Your Message been sent to their email!</p>
+            </div>
     </template>

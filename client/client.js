@@ -1,4 +1,4 @@
-Meteor.autorun(function () {
+Deps.autorun(function () {
     Meteor.subscribe("books", Session.get("subdomain"));
     Meteor.subscribe("subdomains");
 });
@@ -7,8 +7,10 @@ var storeSchoolSubdomain = function () {
         var unverifiedSubdomain = window.location.host.split('.')[0];
         if ((Session.get("subdomain") === undefined || Session.get("subdomain") !== unverifiedSubdomain)
             && window.location.host.split('.').length === 2) { //change this to 3 in production (foo.booktrad.es has three pieces)
-                Session.set("subdomain", window.location.host.split('.')[0]);
-            }
+                Session.set("subdomain", unverifiedSubdomain);
+        } else if (unverifiedSubdomain === "booktrad") {
+            Session.set("subdomain", "booktrad");
+        }
         
     },
     userIsLoggedIn = function () {
@@ -20,6 +22,7 @@ var storeSchoolSubdomain = function () {
     };
 
 storeSchoolSubdomain();
+
 Handlebars.registerHelper("displayDate", function(date) {
     var dateObject = new Date(date);
     return dateObject.toLocaleDateString() + " at " + dateObject.toLocaleTimeString();
@@ -33,7 +36,11 @@ Template.bookboard.books = function () {
         var searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val(),
             searchRegex = new RegExp("\\\\*" + searchQuery + "\\\\*", "i");
         books = Books.find({
-                    $or: [ { "title": { $regex: searchRegex }}, { "author": { $regex: searchRegex }}, { "studentclass": { $regex: searchRegex }},{ "professor": { $regex: searchRegex }},{ "isbn": { $regex: searchRegex}}  ]
+                    $or: [ { "title": { $regex: searchRegex }}, 
+                           { "author": { $regex: searchRegex }}, 
+                           { "studentclass": { $regex: searchRegex }},
+                           { "professor": { $regex: searchRegex }},
+                           { "isbn": { $regex: searchRegex}}  ]
                 }, {
                     sort: {
                         date: -1,
@@ -55,6 +62,49 @@ Template.schoolList.schoolNames = function () {
     return Subdomains.find({}).fetch();
 };
 
+Template.schoolList.rendered = function () {
+    $(".search-query").removeAttr("autofocus");
+    $(".school-search").focus();
+};
+
+Template.defaultSchoolSelection.schoolNames = function () {
+    return Subdomains.find({}, {
+            sort: {
+                    schoolName: 1
+            }
+        }).fetch();
+};
+
+Template.defaultSchoolSelection.rendered = function () {
+    $(".loading").addClass("hidden");
+};
+
+Template.defaultSchoolSelection.events({
+    'focus .school-search': function () {
+        var schools = Subdomains.find({}).fetch(),
+            parsedSchools = [];
+        for (var i=0; i < schools.length; i++) {
+            parsedSchools.push({ value: schools[i].schoolName, id: schools[i].subdomain});
+        }
+        $('#school-search').autocomplete({
+            source: parsedSchools,
+            autoFocus: true,
+            minLength: 2
+        });
+    }
+});
+
+
+
+Template.page.contentLoaded = function () {
+    return Subdomains.find({}).fetch().length > 0;
+}
+
+Template.page.showBookBoard = function () {
+    return Session.get("subdomain") !== undefined   
+            && verifySubdomain(Session.get("subdomain"));
+};
+
 Template.page.showContactOwnerDialog = function () { 
     return Session.get("showContactOwnerDialog");
 };
@@ -65,6 +115,10 @@ Template.page.showAboutModal = function() {
 
 Template.page.showSchoolList = function () {
     return Session.get("showSchoolList");
+};
+
+Template.page.showAlertDiv = function () {
+    return Session.get("showAlertDiv");
 };
 
 var toggleContactOwnerDialog = function (value) {
@@ -98,17 +152,29 @@ Template.contactOwnerDialog.book = function () {
     return Session.get("bookToContact");
 };
 
+Template.contactOwnerDialog.rendered = function () {
+    $(".search-query").removeAttr("autofocus");
+    $(".message").focus();
+};
+
 Template.contactOwnerDialog.events({
     'click .send': function (event, template) {
         var message = template.find(".message").value;
-        Meteor.call('sendMessage', Session.get("bookToContact").owner, message, Template.contactOwnerDialog.book());
+        //Meteor.call('sendMessage', Session.get("bookToContact").owner, message, Template.contactOwnerDialog.book());
         toggleContactOwnerDialog(false);
+        Session.set("showAlertDiv", true);
     },
 
     'click .cancel': function () {
         toggleContactOwnerDialog(false);
     }
 });
+
+Template.alertDiv.events({
+    'click .close': function () {
+        Session.set("showAlertDiv", false);
+    }
+})
 
 Template.book.canRemove = function () {
     return this.owner === Meteor.userId();
@@ -141,12 +207,9 @@ Template.navbar.showPostButton = function () {
             && verifySubdomain(Session.get("subdomain"));
 };
 
-Template.schoolList.rendered = function () {
-    //MAKE THIS A FUNCTION THAT GOES TO THE LINK WHEN CLICKED
-};
-
-Template.navbar.rendered = function () {
-    $('.search-query').keyup(function () {
+Template.sideBar.rendered = function () {
+    $(".loading").addClass("hidden");
+     $('.search-query').keyup(function () {
         if ($(this).val().length > 0) {
             Session.set("searchQuery", $(this).val());
         } else {
@@ -160,6 +223,7 @@ Template.navbar.rendered = function () {
         }
     });
 };
+
 
 Template.navbar.subdomain = function () {
     return Session.get("subdomain");
@@ -249,9 +313,28 @@ Template.schoolList.events({
         if ( template.find("input").value !== "") {
             window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
         }
+    },
+    'focus .school-search': function () {
+        var schools = Subdomains.find({}).fetch(),
+            parsedSchools = [];
+        for (var i=0; i < schools.length; i++) {
+            parsedSchools.push({ value: schools[i].schoolName, id: schools[i].subdomain});
+        }
+        $('.school-search').autocomplete({
+            source: parsedSchools,
+            autoFocus: true,
+            minLength: 2
+        });
     }
 });
 
+Template.defaultSchoolSelection.events({
+    'click .btn': function (event, template) {
+        if ( template.find("input").value !== "") {
+            window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
+        }
+    }
+});
 //Accounts Configuration for email only
 Accounts.ui.config({
     passwordSignupFields: 'EMAIL_ONLY'

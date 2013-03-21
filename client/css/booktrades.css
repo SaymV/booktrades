@@ -11,10 +11,7 @@
 #login-dropdown-list a {
   color:black;
 }
-.active-book {
-  background-color:rgb(255, 255, 202);
-  background-color:rgba(255, 255, 255, 0.6);
-}
+
 .book {
   background:#fff;
   border:1px solid #ccc;
@@ -31,6 +28,12 @@
   padding:10px;
   webkit-border-radius:1em 1em 1em 1em;
 }
+
+.active-book {
+  background-color:rgb(255, 255, 202);
+  background-color:rgba(255, 255, 255, 0.6);
+}
+
 .book p, .nav-collapse button {
   margin-left:20px;
   margin-right:5px;
@@ -102,5 +105,5 @@
 }
 body {
   background:url('/img/grid.png');
-  font-family:'Roboto Condensed', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
