@@ -82,6 +82,14 @@ Meteor.methods({
             school: options.school,
             date: options.date
         });
+    },
+
+    removeBook: function (book) {
+      if (book.owner === this.userId) {
+        return Books.remove({ _id: book._id}, 1);
+      } else {
+        throw new Meteor.Error(401, "You are not this book owner");
+      }
     }
 });
 

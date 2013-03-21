@@ -182,8 +182,7 @@ Template.book.canRemove = function () {
 
 Template.book.events({
     'click .remove': function () {
-        Books.remove(this._id, this);
-        return false;
+        Meteor.call("removeBook", this);
     },
     'click .contact': function () {
       if (!userIsLoggedIn()) { 
