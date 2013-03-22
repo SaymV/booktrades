@@ -45,7 +45,7 @@
             <div class="span6 pull-right">
                 {{> postButton}}
                 <h2>Search</h2>
-                <input type="text" class="search-query" placeholder="Search by Title,Author,Professor,Class, or ISBN" autofocus>               
+                <input type="text" class="search-query" placeholder="Search by Title, Author, Professor, Class, or ISBN" autofocus>               
             </div>
     </template>
 
@@ -72,6 +72,7 @@
         <p class="professor"><i class="icon-user"></i> Professor: {{professor}}</p>
         <p class="studentclass"><i class="icon-book"></i> Class: {{studentclass}}</p>
         <p class="ISBN"><i class="icon-barcode"></i> ISBN: {{isbn}}</p>
+        <div class=
         <p class="date">Posted on: {{displayDate date}}
         {{#if canRemove}}
           <button class="btn btn-small btn-danger pull-right remove">
@@ -81,6 +82,7 @@
         <button class="btn btn-small btn-inverse contact pull-right"><i class="icon-envelope icon-white"></i> Contact Owner</button>
         {{/if}}
         </p>
+        
       </div>
     </template>
 
@@ -115,7 +117,7 @@
           <label>Title</label>
           <input type="text" class="title span5">
 
-          <label>ISBN</label>
+          <label>ISBN (must be either 10 or 13 digits)</label>
           <input type="text" class="isbn span5">
 
           <label>Author</label>
@@ -167,9 +169,10 @@
 
     <template name="defaultSchoolSelection">
         <div class="row-fluid">
-          <div class="book span4 offset4">
+          <div class="span4 home-page-box offset4">
             <h2>Welcome to BookTrades!</h2>
-            <h4>Search for your University's book board below and post your book!</h4>
+            <p>BookTrades is a place for students to buy/sell/exchange books</p>
+            <p>Search for your University's book board below and post your book!</p>
             <div class="input-append">
               <input type=text id="school-search" class="school-search" autofocus/>
               <button class="btn btn-inverse">Go!</button>

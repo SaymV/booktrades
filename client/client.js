@@ -276,6 +276,17 @@ Template.createDialog.events({
         }
     },
 
+    'blur .isbn': function (event, template) {
+        var unverifiedISBN = template.find(".isbn").value;
+        unverifiedISBN = unverifiedISBN.replace(/\D/g, '');
+        console.log(unverifiedISBN.length, unverifiedISBN);
+        if (unverifiedISBN.length !== 13 && unverifiedISBN.length !== 10 ) {
+            $(".isbn").before("<b class=\"warning\">This is not a valid ISBN.</b>")
+        } else {
+            $(".warning").remove();
+        }
+    },
+
     'click .cancel': function () {
         toggleCreateDialog(false);
     }
@@ -330,7 +341,9 @@ Template.schoolList.events({
 Template.defaultSchoolSelection.events({
     'click .btn': function (event, template) {
         if ( template.find("input").value !== "") {
-            window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
+            if ( Subdomains.findOne({schoolName: template.find("input").value}) !== undefined) {
+                window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
+            }
         }
     }
 });
