@@ -160,7 +160,7 @@ Template.contactOwnerDialog.rendered = function () {
 Template.contactOwnerDialog.events({
     'click .send': function (event, template) {
         var message = template.find(".message").value;
-        //Meteor.call('sendMessage', Session.get("bookToContact").owner, message, Template.contactOwnerDialog.book());
+        Meteor.call('sendMessage', Session.get("bookToContact").owner, message, Template.contactOwnerDialog.book());
         toggleContactOwnerDialog(false);
         Session.set("showAlertDiv", true);
     },
