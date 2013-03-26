@@ -19,6 +19,48 @@ var storeSchoolSubdomain = function () {
 
     verifySubdomain = function (unverifiedSubdomain) {
         return Subdomains.find({subdomain: unverifiedSubdomain}).fetch().length > 0;
+    },
+    enableSchoolSearchAutocomplete = function () {
+        var schools = Subdomains.find({}).fetch(),
+            parsedSchools = [];
+        for (var i=0; i < schools.length; i++) {
+            parsedSchools.push({ value: schools[i].schoolName, id: schools[i].subdomain});
+        }
+        $('.school-search').autocomplete({
+            source: parsedSchools,
+            autoFocus: true,
+            minLength: 2
+        });
+    },
+    changeSubdomains = function (template) {
+        if ( template.find("input").value !== "") {
+            if ( Subdomains.findOne({schoolName: template.find("input").value}) !== undefined) {
+                window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
+            } else if ( Subdomains.findOne({subdomain: template.find("input").value}) !== undefined ){
+                window.location.href = "http://" + template.find("input").value + ".booktrad.es";
+            }
+        }
+    },
+    toggleContactOwnerDialog = function (value) {
+        Session.set("showContactOwnerDialog", value)
+    },
+    toggleAboutModal = function () {
+        if (Session.get("showAboutModal") === true) {
+            Session.set("showAboutModal", false);
+        } else {
+            Session.set("showAboutModal", true);
+        }
+    },
+    toggleSchoolList = function () {
+        if (Session.get("showSchoolList") === true) {
+            Session.set("showSchoolList", false);
+        } else {
+            Session.set("showSchoolList", true);
+        }
+        
+    },
+    toggleCreateDialog = function (value) {
+        Session.set("showCreateDialog", value);
     };
 
 storeSchoolSubdomain();
@@ -28,13 +70,24 @@ Handlebars.registerHelper("displayDate", function(date) {
     return dateObject.toLocaleDateString() + " at " + dateObject.toLocaleTimeString();
 });
 
+Template.aboutModal.events({
+    'click .cancel': function () {
+        toggleAboutModal();
+    }
+});
+
+Template.alertDiv.events({
+    'click .close': function () {
+        Session.set("showAlertDiv", false);
+    }
+});
 
 Template.bookboard.books = function () {
-    var books;
+    var books, searchQuery, searchRegex;
 
     if(Session.get("searchQuery") !== undefined) {
-        var searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val(),
-            searchRegex = new RegExp("\\\\*" + searchQuery + "\\\\*", "i");
+        searchQuery = $(".search-query").val() === undefined ? "" : $(".search-query").val();
+        searchRegex = new RegExp("\\\\*" + searchQuery + "\\\\*", "i");
         books = Books.find({
                     $or: [ { "title": { $regex: searchRegex }}, 
                            { "author": { $regex: searchRegex }}, 
@@ -57,124 +110,6 @@ Template.bookboard.books = function () {
     }
     return books;
 };
-
-Template.schoolList.schoolNames = function () {
-    return Subdomains.find({}).fetch();
-};
-
-Template.schoolList.rendered = function () {
-    $(".search-query").removeAttr("autofocus");
-    $(".school-search").focus();
-};
-
-Template.defaultSchoolSelection.schoolNames = function () {
-    return Subdomains.find({}, {
-            sort: {
-                    schoolName: 1
-            }
-        }).fetch();
-};
-
-Template.defaultSchoolSelection.rendered = function () {
-    $(".loading").addClass("hidden");
-};
-
-Template.defaultSchoolSelection.events({
-    'focus .school-search': function () {
-        var schools = Subdomains.find({}).fetch(),
-            parsedSchools = [];
-        for (var i=0; i < schools.length; i++) {
-            parsedSchools.push({ value: schools[i].schoolName, id: schools[i].subdomain});
-        }
-        $('#school-search').autocomplete({
-            source: parsedSchools,
-            autoFocus: true,
-            minLength: 2
-        });
-    }
-});
-
-
-
-Template.page.contentLoaded = function () {
-    return Subdomains.find({}).fetch().length > 0;
-}
-
-Template.page.showBookBoard = function () {
-    return Session.get("subdomain") !== undefined   
-            && verifySubdomain(Session.get("subdomain"));
-};
-
-Template.page.showContactOwnerDialog = function () { 
-    return Session.get("showContactOwnerDialog");
-};
-
-Template.page.showAboutModal = function() {
-    return Session.get("showAboutModal");
-};
-
-Template.page.showSchoolList = function () {
-    return Session.get("showSchoolList");
-};
-
-Template.page.showAlertDiv = function () {
-    return Session.get("showAlertDiv");
-};
-
-var toggleContactOwnerDialog = function (value) {
-        Session.set("showContactOwnerDialog", value)
-    },
-
-    toggleAboutModal = function () {
-        if (Session.get("showAboutModal") === true) {
-            Session.set("showAboutModal", false);
-        } else {
-            Session.set("showAboutModal", true);
-        }
-    },
-
-    toggleSchoolList = function () {
-        if (Session.get("showSchoolList") === true) {
-            Session.set("showSchoolList", false);
-        } else {
-            Session.set("showSchoolList", true);
-        }
-        
-    };
-
-Template.aboutModal.events({
-    'click .cancel': function () {
-        toggleAboutModal();
-    }
-});
-
-Template.contactOwnerDialog.book = function () {
-    return Session.get("bookToContact");
-};
-
-Template.contactOwnerDialog.rendered = function () {
-    $(".search-query").removeAttr("autofocus");
-    $(".message").focus();
-};
-
-Template.contactOwnerDialog.events({
-    'click .send': function (event, template) {
-        var message = template.find(".message").value;
-        Meteor.call('sendMessage', Session.get("bookToContact").owner, message, Template.contactOwnerDialog.book());
-        toggleContactOwnerDialog(false);
-        Session.set("showAlertDiv", true);
-    },
-
-    'click .cancel': function () {
-        toggleContactOwnerDialog(false);
-    }
-});
-
-Template.alertDiv.events({
-    'click .close': function () {
-        Session.set("showAlertDiv", false);
-    }
-})
 
 Template.book.canRemove = function () {
     return this.owner === Meteor.userId();
@@ -201,9 +136,85 @@ Template.book.events({
 
 });
 
-Template.navbar.showPostButton = function () {
+Template.schoolList.rendered = function () {
+    $(".search-query").removeAttr("autofocus");
+    $(".school-search").focus();
+};
+
+Template.schoolList.events({
+    'click .cancel': function () {
+        toggleSchoolList();
+    },
+    'focus .school-search': function () {
+        enableSchoolSearchAutocomplete();
+    },
+    'click .btn': function (event, template) {
+        changeSubdomains(template);
+    }
+});
+
+Template.contactOwnerDialog.book = function () {
+    return Session.get("bookToContact");
+};
+
+Template.contactOwnerDialog.rendered = function () {
+    $(".search-query").removeAttr("autofocus");
+    $(".message").focus();
+};
+
+Template.contactOwnerDialog.events({
+    'click .send': function (event, template) {
+        var message = template.find(".message").value;
+        Meteor.call('sendMessage', Session.get("bookToContact").owner, message, Template.contactOwnerDialog.book());
+        toggleContactOwnerDialog(false);
+        Session.set("showAlertDiv", true);
+    },
+
+    'click .cancel': function () {
+        toggleContactOwnerDialog(false);
+    }
+});
+
+Template.defaultSchoolSelection.rendered = function () {
+    $(".loading").addClass("hidden");
+};
+
+Template.defaultSchoolSelection.events({
+    'focus .school-search': function () {
+        enableSchoolSearchAutocomplete();
+    },
+    'click .btn': function (event, template) {
+        changeSubdomains(template);
+    }
+});
+
+Template.page.contentLoaded = function () {
+    return Subdomains.find({}).fetch().length > 0;
+}
+
+Template.page.showBookBoard = function () {
     return Session.get("subdomain") !== undefined   
             && verifySubdomain(Session.get("subdomain"));
+};
+
+Template.page.showContactOwnerDialog = function () { 
+    return Session.get("showContactOwnerDialog");
+};
+
+Template.page.showAboutModal = function() {
+    return Session.get("showAboutModal");
+};
+
+Template.page.showSchoolList = function () {
+    return Session.get("showSchoolList");
+};
+
+Template.page.showAlertDiv = function () {
+    return Session.get("showAlertDiv");
+};
+
+Template.page.showCreateDialog = function () {
+    return Session.get("showCreateDialog");
 };
 
 Template.sideBar.rendered = function () {
@@ -223,6 +234,10 @@ Template.sideBar.rendered = function () {
     });
 };
 
+Template.navbar.showPostButton = function () {
+    return Session.get("subdomain") !== undefined   
+            && verifySubdomain(Session.get("subdomain"));
+};
 
 Template.navbar.subdomain = function () {
     return Session.get("subdomain");
@@ -232,16 +247,14 @@ Template.navbar.schoolName = function () {
     return Subdomains.find({subdomain: Session.get("subdomain") }).fetch()[0].schoolName;
 };
 
-///////////////////////////////////////////////////////////////////////////////
-// Create Book dialog
-
-var toggleCreateDialog = function (value) {
-    Session.set("showCreateDialog", value);
-};
-
-Template.page.showCreateDialog = function () {
-    return Session.get("showCreateDialog");
-};
+Template.navbar.events({
+    'click .change-schools': function () {
+        toggleSchoolList();
+    },
+    'click .about': function () {
+        toggleAboutModal();
+    }
+});
 
 Template.createDialog.events({
     'click .save': function (event, template) {
@@ -305,47 +318,6 @@ Template.postButton.events({
     }
 });
 
-Template.navbar.events({
-    'click .change-schools': function () {
-        toggleSchoolList();
-    },
-    'click .about': function () {
-        toggleAboutModal();
-    }
-});
-
-Template.schoolList.events({
-    'click .cancel': function () {
-        toggleSchoolList();
-    },
-    'click .btn': function (event, template) {
-        if ( template.find("input").value !== "") {
-            window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
-        }
-    },
-    'focus .school-search': function () {
-        var schools = Subdomains.find({}).fetch(),
-            parsedSchools = [];
-        for (var i=0; i < schools.length; i++) {
-            parsedSchools.push({ value: schools[i].schoolName, id: schools[i].subdomain});
-        }
-        $('.school-search').autocomplete({
-            source: parsedSchools,
-            autoFocus: true,
-            minLength: 2
-        });
-    }
-});
-
-Template.defaultSchoolSelection.events({
-    'click .btn': function (event, template) {
-        if ( template.find("input").value !== "") {
-            if ( Subdomains.findOne({schoolName: template.find("input").value}) !== undefined) {
-                window.location.href = "http://" + Subdomains.findOne({schoolName: template.find("input").value}).subdomain + ".booktrad.es";
-            }
-        }
-    }
-});
 //Accounts Configuration for email only
 Accounts.ui.config({
     passwordSignupFields: 'EMAIL_ONLY'

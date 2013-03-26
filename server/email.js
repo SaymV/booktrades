@@ -15,9 +15,9 @@ var sendMessage = function (fromId, toId, msg, book) {
     to: toEmail,
     replyTo: fromEmail || undefined,
     subject: "BookTrades: "+ fromEmail +" wants your book!",
-    text: "You posted your book, " + book.title + ", on BookTrades.\n\n " + 
+    text: "You received a reply from your post, " + book.title + ", on BookTrades.\n\n " + 
           "Hit reply to message back. \n\n" +
-          "They said:" + msg +
+          "They said:\n\n" + msg +
           "\n\n" + 
           "The BookTrades Team.\n"+
           "http://BookTrad.es\n"
