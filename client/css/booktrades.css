@@ -12,7 +12,7 @@
   color:black;
 }
 
-.book, .home-page-box {
+.book {
   background:#fff;
   border:1px solid #ccc;
   border-bottom:0;
@@ -37,6 +37,52 @@
 .book p, .nav-collapse button {
   margin-left:20px;
   margin-right:5px;
+}
+
+.container-fluid {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.home-page-box {
+  background-image: url('/img/openbook.jpg');
+  position: relative;
+  top: -10px;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}
+
+.opaque-background {
+  background-color: rgba(255, 255, 255, 0.9);
+  border:1px solid #ccc;
+  border-bottom:0;
+  border-radius:1em 1em 1em 1em;
+  color:black;
+  khtml-border-radius:1em 1em 1em 1em;
+  margin:2em;
+  margin-bottom:0;
+  moz-border-radius:1em 1em 1em 1em;
+  ms-border-radius:1em 1em 1em 1em;
+  o-border-radius:1em 1em 1em 1em;
+  overflow:hidden;
+  padding:10px;
+  webkit-border-radius:1em 1em 1em 1em;
+  text-align: center;
+}
+
+.home-page-box img {
+  max-height: 600px;
+  min-width: 100%;
+  overflow: hidden;
+}
+
+.opaque-background img {
+  max-height: 128px;
+  max-width: 128px;
+  min-width: 128px;
 }
 
 .modal-body {

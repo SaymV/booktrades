@@ -265,8 +265,8 @@ Template.createDialog.events({
             studentclass = template.find(".class").value,
             professor = template.find(".professor").value;
 
-
-        if (title.length && description.length) {
+            isbn = isbn.replace(/\D/g, '');
+        if (title.length && (isbn.length === 13 || isbn.length === 10)) {
             Meteor.call('createBook', {
                 title: title,
                 description: description,
@@ -284,16 +284,17 @@ Template.createDialog.events({
              toggleCreateDialog(false);
         } else {
             Session.set("createError",
-                "It needs a title and a description, or why bother?");
+                "It needs a title and an isbn, or why bother?");
         }
     },
 
     'blur .isbn': function (event, template) {
         var unverifiedISBN = template.find(".isbn").value;
         unverifiedISBN = unverifiedISBN.replace(/\D/g, '');
-        console.log(unverifiedISBN.length, unverifiedISBN);
         if (unverifiedISBN.length !== 13 && unverifiedISBN.length !== 10 ) {
-            $(".isbn").before("<b class=\"warning\">This is not a valid ISBN.</b>")
+            if(template.find(".warning") === null) {
+                 $(".isbn").before("<b class=\"warning\">This is not a valid ISBN.</b>")
+            }
         } else {
             $(".warning").remove();
         }
