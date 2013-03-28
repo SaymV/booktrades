@@ -31,6 +31,12 @@ var storeSchoolSubdomain = function () {
             autoFocus: true,
             minLength: 2
         });
+
+        $('.school-search').keypress(function (e) {
+            if (e.which  === 13) {               
+                $('.change-schools').click();
+            }
+        });
     },
     changeSubdomains = function (template) {
         if ( template.find("input").value !== "") {
