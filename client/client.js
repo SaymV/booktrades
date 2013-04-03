@@ -72,6 +72,9 @@ var storeSchoolSubdomain = function () {
 storeSchoolSubdomain();
 
 Handlebars.registerHelper("displayDate", function(date) {
+    if (date === undefined) { 
+        date = new Date();
+    }
     var dateObject = new Date(date);
     return dateObject.toLocaleDateString() + " at " + dateObject.toLocaleTimeString();
 });
@@ -87,6 +90,10 @@ Template.alertDiv.events({
         Session.set("showAlertDiv", false);
     }
 });
+
+Template.bookboard.thereAreBooks = function () {
+    return Books.find({}).fetch().length > 0;
+};
 
 Template.bookboard.books = function () {
     var books, searchQuery, searchRegex;

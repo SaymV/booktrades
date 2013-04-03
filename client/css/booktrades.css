@@ -39,6 +39,10 @@
   margin-right:5px;
 }
 
+.center {
+  text-align: center;
+}
+
 .container-fluid {
   padding-right: 0px;
   padding-left: 0px;
