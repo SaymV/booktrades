@@ -48,6 +48,10 @@
   padding-left: 0px;
 }
 
+.description {
+  padding-left: 50px;
+}
+
 .home-page-box {
   background-image: url('/img/openbook.jpeg');
   position: relative;
@@ -56,7 +60,6 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
 }
 
 .opaque-background {

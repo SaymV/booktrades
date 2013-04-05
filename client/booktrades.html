@@ -94,6 +94,8 @@
         <p class="professor"><i class="icon-user"></i> Professor: {{professor}}</p>
         <p class="studentclass"><i class="icon-book"></i> Class: {{studentclass}}</p>
         <p class="ISBN"><i class="icon-barcode"></i> ISBN: {{isbn}}</p>
+        <p><i class="icon-comment"></i> Description:</p>
+        <p class="description">{{description}}</p>
         <div class=
         <p class="date">Posted on: {{displayDate date}}
         {{#if canRemove}}
@@ -158,7 +160,7 @@
           <label>Title</label>
           <input type="text" class="title span5">
 
-          <label>ISBN (must be either 10 or 13 digits)</label>
+          <label>ISBN *must be either 10 or 13 digits</label>
           <input type="text" class="isbn span5">
 
           <label>Author</label>
@@ -170,7 +172,7 @@
           <label>Professor</label>
           <input type="text" class="professor span5">
 
-          <label>Description</label>
+          <label>Description (Do you have the notes, homework, or tests?)</label>
           <textarea class="description span5"></textarea>
         </div>
 
