@@ -67,7 +67,12 @@ var storeSchoolSubdomain = function () {
     },
     toggleCreateDialog = function (value) {
         Session.set("showCreateDialog", value);
-    };
+    },
+
+    changeAutoFocus = function(field) {
+        $(".search-query").removeAttr("autofocus");
+        $("." + field).focus();
+    }
 
 storeSchoolSubdomain();
 
@@ -150,8 +155,7 @@ Template.book.events({
 });
 
 Template.schoolList.rendered = function () {
-    $(".search-query").removeAttr("autofocus");
-    $(".school-search").focus();
+    changeAutoFocus("school-search");
 };
 
 Template.schoolList.events({
@@ -171,8 +175,7 @@ Template.contactOwnerDialog.book = function () {
 };
 
 Template.contactOwnerDialog.rendered = function () {
-    $(".search-query").removeAttr("autofocus");
-    $(".message").focus();
+    changeAutoFocus("message");
 };
 
 Template.contactOwnerDialog.events({
@@ -320,6 +323,10 @@ Template.createDialog.events({
 
 Template.createDialog.error = function () {
     return Session.get("createError");
+};
+
+Template.createDialog.rendered = function () {
+    changeAutoFocus("title");
 };
 
 Template.postButton.events({

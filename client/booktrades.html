@@ -146,10 +146,10 @@
     <template name="createDialog">
       <div class="mask"> </div>
       <div class="modal">
-        <div class="modal-header">Post a Book!
+        <div class="modal-header">
 
           <button type="button" class="close cancel">&times;</button>
-          <h3>Add Book</h3>
+          <h4>Post a Book!</h4>
         </div>
 
         <div class="modal-body">
@@ -157,7 +157,7 @@
             <div class="alert alert-error">{{error}}</div>
           {{/if}}
 
-          <label>Title</label>
+          <label>Title*</label>
           <input type="text" class="title span5">
 
           <label>ISBN *must be either 10 or 13 digits</label>
@@ -172,11 +172,12 @@
           <label>Professor</label>
           <input type="text" class="professor span5">
 
-          <label>Description (Do you have the notes, homework, or tests?)</label>
+          <label>Description* (Do you have the notes, homework, or tests?)</label>
           <textarea class="description span5"></textarea>
         </div>
 
         <div class="modal-footer">
+          <p class="pull-left">*required field</p>
           <a href="#" class="btn cancel">Cancel</a>
           <a href="#" class="btn btn-primary save">Add Book!</a>
         </div>
