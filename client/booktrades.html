@@ -146,6 +146,7 @@
     </template>
 
     <template name="createDialog">
+      <div class="modal-backdrop  in"></div>
       <div class="mask"> </div>
       <div class="modal">
         <div class="modal-header">
@@ -187,10 +188,13 @@
     </template>
 
     <template name="aboutModal">
+      <div class="modal-backdrop  in"></div>
       <div id="about"class="modal">
         <div class="modal-header"><h3>About BookTrades<h3></div>
         <div class="modal-body">
-          BookTrades is a place for students to buy/sell/exchange books. Post your book here, tell your friends about it, and beat the over-priced bookstore!
+          <p>BookTrades is a place for students to buy/sell/exchange books. Post your book here, tell your friends about it, and beat the over-priced bookstore!
+          </p>
+          <p>BookTrades was developed by <a href="http://samverhasselt.com">Sam Verhasselt</a> using <a href="http://meteor.com">MeteorJS</a></p>
         </div>
         <div class="modal-footer">
           <a href="#" class="btn btn-primary cancel">Close</a>
@@ -199,6 +203,7 @@
     </template>
 
     <template name="schoolList">
+      <div class="modal-backdrop  in"></div>
        <div class="modal">
         <div class="modal-header"><h3>Change Schools</h3></div>
         <div class="modal-body">
@@ -280,6 +285,7 @@
                   <a class="brand" href="#"></a>
                   <div class="nav-collapse">
                     <ul class="nav">
+                      <li><a>
                         {{#if showPostButton}}
                             {{schoolName}} 
                         {{/if}}
