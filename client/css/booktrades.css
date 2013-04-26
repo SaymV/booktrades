@@ -53,13 +53,18 @@
 }
 
 .home-page-box {
-  background-image: url('/img/openbook.jpeg');
+  background-image: url('/img/openbook-blurred.jpeg');
   position: relative;
   top: -10px;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.home-page-content {
+  z-index:10;
+  position:relative;
 }
 
 .opaque-background {
@@ -80,25 +85,25 @@
   text-align: center;
 }
 
-.home-page-box img {
-  max-height: 600px;
-  min-width: 100%;
-  overflow: hidden;
+.logo {
+  padding-top: 10px;
 }
 
-.opaque-background img {
+.instructions img {
   max-height: 128px;
   max-width: 128px;
   min-width: 128px;
+  overflow: hidden;
 }
 
 .modal-body {
   max-height: 500px;
 }
 .navbar .brand {
-  color:#f4f4f4;
-  font-size:20px;
-  padding:8px 20px 12px;
+  background: url('/img/logo-clear-small.png')  no-repeat center;
+  height: 20px;
+  width: 200px;
+  overflow: visible;
 }
 .navbar .nav > li > a {
   color:#efefef;

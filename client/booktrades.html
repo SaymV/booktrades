@@ -2,6 +2,8 @@
         <title>BookTrades | A better service for textbook exchange</title>
         <meta charset="UTF-8"><!-- Bootstrap -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
         <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -213,23 +215,27 @@
 
     <template name="defaultSchoolSelection">
         <div class="home-page-box">
+          <img class ="logo offset6" src="/img/logo-clear.png" height="400" width="700"></img>
           <div class="row-fluid">
               <div class="span10 offset1 opaque-background">
-                <h2>Welcome to BookTrades!</h2>
-                <div class="span4">
-                  <img src="/img/books.png"></img>
-                  <h3>1. Post Your Books</h3>
-                  <p> You just took a class. You're finished using the book. You want to find someone to buy it from you.</p>
-                </div>
-                <div class="span4">
-                  <img src="/img/mail.png"></img>
-                  <h3>2. Receive a Message</h3>
-                  <p> You are contacted by someone who needs your book. You settle on a price. You decide where to meet.</p>
-                </div>
-                <div class="span3">
-                  <img src="/img/handshake.png"></img>
-                  <h3>3. Meet and Exchange</h3>
-                  <p>You both win!</p>
+                <h2>Welcome to BookTrades! </h2>
+                <h4>BookTrades is an easy place to post and search for textbooks at your university.</h4>
+                <div class="instructions">
+                  <div class="span4">
+                    <img src="/img/books.png"></img>
+                    <h3>1. Post Your Books</h3>
+                    <p> Take a class. Finish it. Post your book here for classmates to find.</p>
+                  </div>
+                  <div class="span4">
+                    <img src="/img/mail.png"></img>
+                    <h3>2. Receive a Message</h3>
+                    <p> Get contacted by someone who needs your book. Settle on a price. Decide where to meet.</p>
+                  </div>
+                  <div class="span3">
+                    <img src="/img/handshake.png"></img>
+                    <h3>3. Meet and Exchange</h3>
+                    <p>You both win!</p>
+                  </div>
                 </div>
               </div>
           </div>
@@ -242,9 +248,6 @@
                     <button class="btn btn-inverse change-schools">Go!</button>
                   </div>
                 </div>
-          </div>
-          <div class="row-fluid">
-               <p>DK</p>
           </div>
           <div class="row-fluid">
             <div class="span10 offset1 opaque-background">
@@ -261,7 +264,7 @@
             </div>
           </div>
           <div class="row-fluid">
-            <p>&nbsp;</p> <p>&nbsp;</p> <p>&nbsp;</p> <p>&nbsp;</p>
+            <p>DK</p> <p>&nbsp;</p> <p>&nbsp;</p> <p>&nbsp;</p>
           </div>  
     </template>
 
@@ -274,10 +277,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </a>
-                  <a class="brand" href="#">BookTrad.es</a>
+                  <a class="brand" href="#"></a>
                   <div class="nav-collapse">
                     <ul class="nav">
-                      <li><a href="/"><i class="icon-home icon-white"></i>
                         {{#if showPostButton}}
                             {{schoolName}} 
                         {{/if}}
