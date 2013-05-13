@@ -1,0 +1,31 @@
+Sam - -
+
+This is basically really, really good code.  I have a few comments:
+
+email.js
+  it might be nice to make the "fromEmail" string at line 17 into
+    a "mailto:" clickable string so the user can more easily reply
+
+client.js
+  this seems kind of long by Uncle Bob standards, and it could use
+    a few comments to indicate what some of the functions and the
+    templates do;  The names are descriptive, though and that helps.
+
+server.js
+  generally NOT a great idea to put huge lists like this into functions,
+    but it's mitigated by the fact it is read in at server "startup"
+  some elaboration of the functions in comments would help, or at least
+    move these to the top (if possible) so that the reader doesn't get
+    the impression that the entire file is simply the list of domains
+  some of the Meteor.methods..... have magic numbers, which isn't the
+    optimal way of doing things; if there is a limit to something, it
+    is better to say "STRING_LIMIT" than "1000".
+
+All in all, you did a great job on this code, and it works as you
+advertised it would.
+
+Nice work!
+
+Best of luck,
+B.J.
+|B-)
