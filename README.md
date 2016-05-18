@@ -1,4 +1,4 @@
-BookTrades is a closed source real-time textbook exchange site.
+BookTrades is a real-time textbook exchange site.
 
 **Note:** BookTrades is beta software. Most of it should work but it's still a little unpolished and you'll probably find some bugs. Use at your own risk :)
 
