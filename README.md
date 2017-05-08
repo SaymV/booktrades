@@ -51,5 +51,6 @@ Because the app must be launched as root to use port 80, the environment variabl
 Yes, this information is tailored to my Amazon AWS account, and yes, it should remain private.
 ```
 export MONGO_URL='mongodb://localhost:27017/booktrades'
-export ROOT_URL='54.235.73.107'
-export MAIL_URL='smtp://AKIAJ6QJBECGNIUVNWYQ:ArW3fco4oHVYlfQANf%2FFV72CcSFyh4e1fnqeK1U5aCCS@email-smtp.us-east-1.amazonaws.com:587'
+export ROOT_URL='$IP_ADDRESS'
+export MAIL_URL='smtp://KEY:EMAIL_ID@email-smtp.us-east-1.amazonaws.com:587'
+```
